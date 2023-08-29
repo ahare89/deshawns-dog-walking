@@ -31,9 +31,16 @@ useEffect(() => {
     <div>
     <article className="dogs">
         {
-            dogs.map(dog => <Dog key={dog?.dogId} id={dog?.dogId} name={dog?.name} city={dog?.city?.name} walker={dog?.walker?.name}/>)
+            dogs.map(dog => (
+            <div key={dog?.dogId} className="dog-container">
+            <Dog id={dog?.dogId} name={dog?.name} city={dog?.city?.name} walker={dog?.walker?.name}/>
+            <DeleteDog id={dog?.dogId} fetchDogs={fetchDogs} />
+            </div>
+            ))
         }
+        
     </article>
+    
     <section>
         <button>Add Dog</button>
     </section>

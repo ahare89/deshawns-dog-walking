@@ -9,7 +9,6 @@ export const Dog = ({ id, name, walker, city }) => {
         <Link to={`/api/dogs/${id}`}>Name: {name}</Link>
       </div>
 
-      <div><DeleteDog id={id}/></div>
     </section>
   );
 };

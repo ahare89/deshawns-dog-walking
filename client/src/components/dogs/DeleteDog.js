@@ -39,7 +39,7 @@ const deleteDogButtonHandler = (event) => {
 
 return <>
 
-<button onClick={(event) => deleteDogButtonHandler(event)} className="btn-delete-dog">Delete Dog</button>
+<button className="DeleteButton" onClick={(event) => deleteDogButtonHandler(event)} className="btn-delete-dog">Delete Dog</button>
 </>
 
 }

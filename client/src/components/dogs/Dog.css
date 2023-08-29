@@ -10,9 +10,22 @@
     flex-flow: column wrap;
     padding: 2em;
     background-color: bisque;
+    border-radius: 30px;
     
 }
 
 .dog_header {
     font-weight: bold;
 }
+
+.dog-container {
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .DeleteButton {
+    font-size: 12px;
+    padding: 5px;
+    margin-top: 5px;
+  }
