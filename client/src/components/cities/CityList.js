@@ -6,16 +6,11 @@ const [cities, setCities] = useState([])
 
 
 useEffect(() => {
-    const fetchCities = async () => {
-        try {
-            const response  = await fetch("/api/cities")
-            const data = await response.json()
-            setCities(data)
-            } catch(error) {
-            console.error("Error fetching data:", error)
-        }
-    };
-    fetchCities();
+    fetch("/api/cities")
+    .then(res => res.json())
+    .then((cityData) => {
+        setCities(cityData)
+    })
 }, []);
 
 return (

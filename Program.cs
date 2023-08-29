@@ -125,9 +125,25 @@ app.MapGet("/api/walkers", () =>
     return walkers;
 });
 
-app.MapGet("api/cities", () => {
+app.MapGet("/api/cities", () => {
     return cities;
 });
+
+app.MapDelete("/api/dogs/{id}", (int id) => 
+
+    {
+        Dog dogToDelete = dogs.FirstOrDefault(dog => dog.DogId == id);
+        if (dogToDelete != null)
+        {
+            dogs.Remove(dogToDelete);
+            return Results.NoContent();
+        }
+        else
+        {
+            return Results.NotFound();
+        }
+    });
+
 
 
 app.Run();
