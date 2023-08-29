@@ -1,0 +1,18 @@
+.dogs {
+    display: flex;
+    flex-flow: row wrap;
+    
+}
+
+
+.dog {
+    display: flex;
+    flex-flow: column wrap;
+    padding: 2em;
+    background-color: bisque;
+    
+}
+
+.dog_header {
+    font-weight: bold;
+}

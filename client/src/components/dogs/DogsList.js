@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DeleteDog } from "./DeleteDog";
+import { DogDetails } from "./DogDetails";
+import { Dog } from "./Dog";
 
 export const DogsList = () => {
  
     
-
 const [dogs, setDogs] = useState([])
 
     const fetchDogs = async () => {
@@ -24,16 +25,19 @@ useEffect(() => {
 [])
 
 
+
   return (
     <>
+    <div>
     <article className="dogs">
         {
-            dogs.map(dog => <div key={dog.dogId}><Link>{dog.name}</Link><DeleteDog fetchDogs={fetchDogs}id={dog.dogId}/></div>)
+            dogs.map(dog => <Dog key={dog?.dogId} id={dog?.dogId} name={dog?.name} city={dog?.city?.name} walker={dog?.walker?.name}/>)
         }
     </article>
     <section>
         <button>Add Dog</button>
     </section>
+    </div>
     </>
 );
 
