@@ -3,9 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { DeleteDog } from "./DeleteDog";
 import { DogDetails } from "./DogDetails";
 import { Dog } from "./Dog";
+import { AddDog } from "./AddDog";
 
 export const DogsList = () => {
  
+const [addDogButton, setAddDogButton] = useState(false)
     
 const [dogs, setDogs] = useState([])
 
@@ -24,7 +26,14 @@ useEffect(() => {
 },
 [])
 
+const addDogButtonHandler = (clickEvent) => {
+  clickEvent.preventDefault()
+  setAddDogButton(true)
+}
 
+const cancelButtonHandler = () => {
+  setAddDogButton(false);
+};
 
   return (
     <>
@@ -42,10 +51,15 @@ useEffect(() => {
     </article>
     
     <section>
-        <button>Add Dog</button>
-    </section>
-    </div>
+          { !addDogButton ? 
+            <button onClick={addDogButtonHandler}>Add Dog</button> : 
+            <>
+              <button onClick={cancelButtonHandler}>Cancel</button>
+              <AddDog fetchDogs={fetchDogs}/>
+            </>
+          }
+        </section>
+      </div>
     </>
-);
-
-}
+  );
+};

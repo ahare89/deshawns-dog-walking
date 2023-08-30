@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using DogWalking.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -139,6 +140,13 @@ app.MapGet("/api/walkers", () =>
 
 app.MapGet("/api/cities", () => {
     return cities;
+});
+
+app.MapPost("/api/dogs", (Dog dog) => {
+    //add Id to each new dog
+    dog.DogId = dogs.Count > 0 ?dogs.Max(dog => dog.DogId) + 1: 1;
+    dogs.Add(dog);
+    return dog;
 });
 
 app.MapDelete("/api/dogs/{id}", (int id) => 
