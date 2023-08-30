@@ -21,6 +21,7 @@ root.render(
         <Route path="cities" element={<CityList />} />
         <Route path="dogs" element={<DogsList/>} />
         <Route path="/api/dogs/:dogId" element={<DogDetails/>} />
+        <Route path="/dogs/new" element={<></>} />
       </Route>
     </Routes>
   </BrowserRouter>,
