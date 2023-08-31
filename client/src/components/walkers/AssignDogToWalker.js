@@ -20,8 +20,6 @@ const handleSubmit = async (e) => {
       return;
     }
   
-    console.log(selectedDog.dogId);
-    console.log(walkerId);
   
     try {
       const response = await fetch(`/api/dogs/${selectedDog.dogId}`, {
@@ -39,7 +37,6 @@ const handleSubmit = async (e) => {
       fetchDogs()
      
     } catch (error) {
-      console.log("I'm in the catch");
       console.error("Error updating dog", error);
     }
   };
