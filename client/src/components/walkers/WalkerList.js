@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./WalkerList.css"
+import { AssignDogToWalker } from "./AssignDogToWalker";
 
 export const WalkerList = () => {
 
@@ -8,6 +9,7 @@ const [walkers, setWalkers] = useState([]);
 const [cities, setCities] = useState([])
 const [selectedCity, setSelectedCity] = useState("")
 const [filteredWalkers, setFilteredWalkers] = useState([]);
+const [dogs, setDogs] = useState([])
 
 useEffect(() => {
     const fetchWalkers = async () => {
@@ -20,6 +22,14 @@ useEffect(() => {
     }
 };
 fetchWalkers();
+},[])
+
+useEffect(()=> {
+    fetch("/api/dogs")
+    .then(res => res.json())
+    .then((dogArray) => {
+        setDogs(dogArray)
+    })
 },[])
 
 useEffect(() => {
@@ -49,6 +59,21 @@ const handleCityChange = (e) => {
     }
 }
 
+const updateDogs = (newDogs) => {
+    setDogs(newDogs)
+}
+
+const fetchDogs = () => {
+    fetch("/api/dogs")
+    .then(res => res.json())
+    .then((dogArray) => {
+        setDogs(dogArray)
+    })
+}
+
+useEffect(() => {
+    console.log('Parent Component: dogs state updated:', dogs);
+  }, [dogs]);
 
 return (
     <>
@@ -62,7 +87,7 @@ return (
     </section>
     <article className="walkers">
         {
-            filteredWalkers.map(walker => <div key={walker.walkerId}><Link>{walker.name}</Link></div>)
+            filteredWalkers.map(walker => <div key={walker.walkerId}><Link>{walker.name}</Link><AssignDogToWalker dogs={dogs} setDogs={setDogs} fetchDogs={fetchDogs} updateDogs={updateDogs} walker={walker} walkerCityId={walker.cityId} walkerId={walker.walkerId}/></div>)
         }
     </article>
     </>

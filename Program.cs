@@ -142,12 +142,54 @@ app.MapGet("/api/cities", () => {
     return cities;
 });
 
+app.MapPut("/api/walkers/{id}", (int id, Walker walker) => {
+    Walker walkerToUpdate = walkers.FirstOrDefault(w => w.WalkerId == id);
+    if (walkerToUpdate == null)
+    {
+        return Results.NotFound();
+    }
+    if (id != walker.WalkerId)
+    {
+        return Results.BadRequest();
+    }
+    int walkerIndex = walkers.IndexOf(walkerToUpdate);
+    if(walkerIndex == -1)
+    {
+        return Results.NotFound();
+    }
+    walkers[walkerIndex] = walker;
+    return Results.Ok();
+});
+
+app.MapPut("/api/dogs/{id}", (int id, Dog dog) => {
+    Dog dogToUpdate = dogs.FirstOrDefault(d => d.DogId == id);
+    if (dogToUpdate == null)
+    {
+        return Results.NotFound();
+    }
+    
+    int dogIndex = dogs.IndexOf(dogToUpdate);
+    if(dogIndex == -1)
+    {
+        return Results.NotFound();
+    }
+    dogs[dogIndex] = dog;
+    return Results.Ok();
+});
+
 app.MapPost("/api/dogs", (Dog dog) => {
     //add Id to each new dog
     dog.DogId = dogs.Count > 0 ?dogs.Max(dog => dog.DogId) + 1: 1;
     dogs.Add(dog);
     return dog;
 });
+
+app.MapPost("/api/cities", (City city) => {
+    city.CityId = cities.Count > 0 ?cities.Max(city => city.CityId) + 1: 1;
+    cities.Add(city);
+    return city;
+});
+
 
 app.MapDelete("/api/dogs/{id}", (int id) => 
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AddCity } from "./AddCity";
 
 export const CityList = () => {
 
@@ -14,11 +15,16 @@ useEffect(() => {
 }, []);
 
 return (
+    <>
     <article className="cities">
         {
             cities.map(city => <div className="city" key={city.cityId}>{city.name}</div>)
         }
     </article>
+    <section>
+        <AddCity cities={cities} setCities={setCities}/>
+    </section>
+    </>
 )
 
 

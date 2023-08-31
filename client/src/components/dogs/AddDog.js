@@ -42,6 +42,11 @@ const handleSubmit = (e) => {
     .then(response => response.json())
     .then(data => {
         fetchDogs()
+        updateDog({
+            name: "",
+            walkerId: "",
+            cityId: ""
+        })
       console.log("Success:", data);
     })
     .catch((error) => {
@@ -76,7 +81,7 @@ return (
 
         <label htmlFor="walkerId">Assigned Walker: </label>
         <select
-            value=""
+            value={dog.walkerId}
             id="walkerId"
             name="walkerId"
             onChange={handleChange}
@@ -91,7 +96,7 @@ return (
 
         <label htmlFor="cityId">City: </label>
         <select
-            value=""
+            value={dog.cityId}
             id="cityId"
             name="cityId"
             onChange={handleChange}
