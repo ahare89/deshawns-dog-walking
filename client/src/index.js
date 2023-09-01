@@ -10,6 +10,7 @@ import { WalkerList } from "./components/walkers/WalkerList";
 import { CityList } from "./components/cities/CityList";
 import { HomePage } from "./components/HomePage";
 import { DogDetails } from "./components/dogs/DogDetails";
+import { WalkerDetails } from "./components/walkers/WalkerDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,7 +21,8 @@ root.render(
         <Route path="walkers" element={<WalkerList/>} />
         <Route path="cities" element={<CityList />} />
         <Route path="dogs" element={<DogsList/>} />
-        <Route path="/api/dogs/:dogId" element={<DogDetails/>} />
+        <Route path="/dogs/:dogId" element={<DogDetails/>} />
+        <Route path = "/walkers/:walkerId" element={<WalkerDetails/>} />
         <Route path="/dogs/new" element={<></>} />
       </Route>
     </Routes>

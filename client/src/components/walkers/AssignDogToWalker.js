@@ -44,7 +44,6 @@ const handleSubmit = async (e) => {
 useEffect(() => {
     const newFilteredDogs = dogs.filter(dog => dog.cityId === walkerCityId && dog.walkerId !== walkerId)
     setFilteredDogs(newFilteredDogs)
-    console.log("useEffect ran", newFilteredDogs);
 },[dogs, walkerCityId, walkerId])
 
 

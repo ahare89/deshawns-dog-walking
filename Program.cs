@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using DogWalking.Models;
+using Microsoft.AspNetCore.HttpLogging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,6 +96,30 @@ List<Dog> dogs = new List<Dog>
     new Dog { DogId = 40, Name = "Chloe", CityId = 11, WalkerId = 20 }
 };
 
+List<WalkerCity> walkerCities = new List<WalkerCity>
+{
+    new WalkerCity { WalkerCityId = 1, WalkerId = 1, CityId = 1 },
+    new WalkerCity { WalkerCityId = 2, WalkerId = 2, CityId = 2 },
+    new WalkerCity { WalkerCityId = 3, WalkerId = 3, CityId = 3 },
+    new WalkerCity { WalkerCityId = 4, WalkerId = 4, CityId = 4 },
+    new WalkerCity { WalkerCityId = 5, WalkerId = 5, CityId = 5 },
+    new WalkerCity { WalkerCityId = 6, WalkerId = 6, CityId = 6 },
+    new WalkerCity { WalkerCityId = 7, WalkerId = 7, CityId = 7 },
+    new WalkerCity { WalkerCityId = 8, WalkerId = 8, CityId = 8 },
+    new WalkerCity { WalkerCityId = 9, WalkerId = 9, CityId = 9 },
+    new WalkerCity { WalkerCityId = 10, WalkerId = 10, CityId = 10 },
+    new WalkerCity { WalkerCityId = 11, WalkerId = 11, CityId = 1 },
+    new WalkerCity { WalkerCityId = 12, WalkerId = 12, CityId = 2 },
+    new WalkerCity { WalkerCityId = 13, WalkerId = 13, CityId = 3 },
+    new WalkerCity { WalkerCityId = 14, WalkerId = 14, CityId = 4 },
+    new WalkerCity { WalkerCityId = 15, WalkerId = 15, CityId = 5 },
+    new WalkerCity { WalkerCityId = 16, WalkerId = 16, CityId = 6 },
+    new WalkerCity { WalkerCityId = 17, WalkerId = 17, CityId = 7 },
+    new WalkerCity { WalkerCityId = 18, WalkerId = 18, CityId = 8 },
+    new WalkerCity { WalkerCityId = 19, WalkerId = 19, CityId = 9 },
+    new WalkerCity { WalkerCityId = 20, WalkerId = 20, CityId = 10 }
+};
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -142,8 +167,33 @@ app.MapGet("/api/cities", () => {
     return cities;
 });
 
+app.MapGet("/api/walkercities", () => {
+    return walkerCities;
+});
+
+app.MapGet("api/walkers/{id}", (int id) =>
+{
+    Walker walker = walkers.FirstOrDefault(walkers => walkers.WalkerId == id);
+    List<WalkerCity> walkerCitiesForWalker = walkerCities.Where(wc => wc.WalkerId == id).ToList();
+    List<City> citiesForWalker = walkerCitiesForWalker.Select(wc => cities.First(c => c.CityId == wc.CityId)).ToList();
+    walker.Cities = citiesForWalker;
+    return walker;
+});
+
 app.MapPut("/api/walkers/{id}", (int id, Walker walker) => {
     Walker walkerToUpdate = walkers.FirstOrDefault(w => w.WalkerId == id);
+    walkerCities = walkerCities.Where(wc => wc.WalkerId != walker.WalkerId).ToList();
+    foreach (City city in walker.Cities)
+    {
+        WalkerCity newWC = new WalkerCity
+        {
+            WalkerId=walker.WalkerId,
+            CityId = city.CityId
+
+        };
+        newWC.WalkerCityId = walkerCities.Count > 0 ?walkerCities.Max(wc => wc.WalkerCityId) + 1 : 1;
+        walkerCities.Add(newWC);
+    }
     if (walkerToUpdate == null)
     {
         return Results.NotFound();

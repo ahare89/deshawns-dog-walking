@@ -6,7 +6,7 @@ export const Dog = ({ id, name, walker, city }) => {
   return (
     <section className="dog">
       <div>
-        <Link to={`/api/dogs/${id}`}>Name: {name}</Link>
+        <Link to={`/dogs/${id}`}>Name: {name}</Link>
       </div>
 
     </section>
